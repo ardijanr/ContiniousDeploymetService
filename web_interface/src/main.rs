@@ -42,8 +42,8 @@ async fn deploy(folder: String) -> String {
             let _ = env::set_current_dir(&folder.unwrap().path());
 
             let result = run_service();
-            println!("{:?}",result.0);
-            println!("Exit status: {:?}",result.1);
+            println!("{}",result.0.to_string());
+            println!("Exit code: {:?}",result.1);
             if result.1==0{
                 return "Successfully Deployment".to_string();
             }
