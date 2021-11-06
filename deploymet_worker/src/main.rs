@@ -18,7 +18,7 @@ fn main() {
 
     if new_commit() {
 
-        let rebase_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH));
+        let rebase_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH).trim());
 
         let _ = run_and_output("git",rebase_command.as_str());
 
