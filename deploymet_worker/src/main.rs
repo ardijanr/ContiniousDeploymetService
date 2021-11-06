@@ -21,6 +21,7 @@ fn main() {
         let rebase_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH).trim());
 
         let _ = run_and_output("git",rebase_command.as_str());
+        let _ = run_and_output("git","pull");
 
         //TODO check if build was successful first with docker build, before we start docker-compose
 
