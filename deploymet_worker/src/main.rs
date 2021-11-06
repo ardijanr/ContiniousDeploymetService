@@ -2,6 +2,7 @@ use std::str::from_utf8;
 use std::{env, process::exit};
 use std::process::{Command, Stdio};
 use std::io::{BufRead, BufReader};
+use futures::executor::block_on;
 
 
 const CURRENT_BRANCH : &str = "rev-parse --abbrev-ref HEAD";
@@ -16,12 +17,11 @@ const COMPOSE : &str = "docker-compose up --build --headless";
 
 fn main() {
 
-    if new_commit() {
+    if block_on(new_commit()) {
 
-        let rebase_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH));
+        let rebase_command = format!("{}{}",GIT_RESET,block_on(run_capture("git",CURRENT_BRANCH)));
 
-        run_capture("git",rebase_command.as_str());
-
+        block_on(run_capture("git",rebase_command.as_str()));
 
         //TODO check if build was successful first with docker build, before we start docker-compose
 
@@ -43,17 +43,23 @@ fn main() {
 
 
 //Checks if remote is ahead of local.
-fn new_commit()->bool{
-    if run_capture("git",LOCAL_COMMIT) != run_capture("git",REMOTE_COMMIT){
+async fn new_commit()->bool{
+    let tmp  = run_capture("git",LOCAL_COMMIT).await;
+    let local : Vec<&str> = tmp.split_ascii_whitespace().collect();
 
+    let tmp  = run_capture("git",REMOTE_COMMIT).await;
+    let remote : Vec<&str> = tmp.split_ascii_whitespace().collect();
+
+    println!("{:?}\n{:?}",local[0],remote[0]    );
+
+    if local[0] != remote[0] {
         return true;
     }
-
     return false;
 }
 
 //runs a command, and captures stdout and converts it to string.
-fn run_capture(command: &str,command_text : &str) -> String{
+async fn run_capture(command: &str,command_text : &str) -> String{
     let mut cmd = Command::new(command);
     cmd.args(command_text.split(" "));
 
