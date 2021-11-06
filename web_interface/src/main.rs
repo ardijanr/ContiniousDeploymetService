@@ -21,21 +21,12 @@ const PROGRAM : &str = "deploy_worker";
 // Max requests per minute
 const REQ_PR_MIN : usize = 50;
 
-// Hosts allowed to call deploy/route
-const ALLOWED_HOSTS : [&str ; 2] = ["localhost:8080","github"];
-
 
 #[get("/deploy/{project}")]
-async fn index(req: HttpRequest, project: web::Path<String>) -> Result<HttpResponse, Error> {
-    if let Some(host) = req.headers().get("host"){
-        println!("HOST IS :   {:?}",host);
-        if ALLOWED_HOSTS.contains(&host.to_str().unwrap()) {
-            let temp = deploy(project.as_str().to_string()).await;
+async fn index(project: web::Path<String>) -> Result<HttpResponse, Error> {
+    let temp = deploy(project.as_str().to_string()).await;
 
-            return Ok(HttpResponse::Ok().body(temp));
-        }
-    }
-    return Err(ErrorMethodNotAllowed(""));
+    return Ok(HttpResponse::Ok().body(temp));
 }
 
 
