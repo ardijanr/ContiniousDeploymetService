@@ -22,6 +22,7 @@ const PROGRAM : &str = "deploy_worker";
 const REQ_PR_MIN : usize = 50;
 
 
+
 #[get("/deploy/{project}")]
 async fn index(project: web::Path<String>) -> Result<HttpResponse, Error> {
     let temp = deploy(project.as_str().to_string()).await;
@@ -56,8 +57,7 @@ async fn deploy(folder: String) -> String {
 
 fn run_service() -> (String,i32){
 
-    let mut cmd = Command::new(PROGRAM);
-    let result = cmd.output().unwrap();
+    let result = Command::new("sudo").arg(PROGRAM).output().unwrap();
     let stdout = from_utf8(&result.stdout).unwrap().to_string();
     let status = result.status.code().unwrap();
 
