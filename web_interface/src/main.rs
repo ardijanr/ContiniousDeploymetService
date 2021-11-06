@@ -97,7 +97,6 @@ async fn main() -> std::io::Result<()> {
                     .default_service(web::route().to(HttpResponse::MethodNotAllowed))
 
             )
-            .service(web::resource("/test1.html").to(|| async { "Test\r\n" }))
     })
     .bind(("0.0.0.0", 4999))?
     .workers(1)

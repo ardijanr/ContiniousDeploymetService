@@ -9,7 +9,7 @@ const CURRENT_BRANCH : &str = "rev-parse --abbrev-ref HEAD";
 const LOCAL_COMMIT   : &str = "rev-parse HEAD";
 const REMOTE_COMMIT  : &str = "ls-remote origin HEAD";
 const GIT_RESET : &str = "reset --hard origin/";
-const COMPOSE : &str = "docker-compose up --build --headless";
+const COMPOSE : &str = "docker-compose up --build --detach";
 
 
 //TODO test
@@ -17,11 +17,11 @@ const COMPOSE : &str = "docker-compose up --build --headless";
 
 fn main() {
 
-    if block_on(new_commit()) {
+    if new_commit() {
 
-        let rebase_command = format!("{}{}",GIT_RESET,block_on(run_capture("git",CURRENT_BRANCH)));
+        let rebase_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH));
 
-        block_on(run_capture("git",rebase_command.as_str()));
+        run_capture("git",rebase_command.as_str());
 
         //TODO check if build was successful first with docker build, before we start docker-compose
 
@@ -43,11 +43,12 @@ fn main() {
 
 
 //Checks if remote is ahead of local.
-async fn new_commit()->bool{
-    let tmp  = run_capture("git",LOCAL_COMMIT).await;
+fn new_commit()->bool{
+    println!("{:?}", run_capture("ls","./"));
+    let tmp  = run_capture("git",LOCAL_COMMIT);
     let local : Vec<&str> = tmp.split_ascii_whitespace().collect();
 
-    let tmp  = run_capture("git",REMOTE_COMMIT).await;
+    let tmp  = run_capture("git",REMOTE_COMMIT);
     let remote : Vec<&str> = tmp.split_ascii_whitespace().collect();
 
     if remote.len() == 0 {
@@ -64,7 +65,7 @@ async fn new_commit()->bool{
 }
 
 //runs a command, and captures stdout and converts it to string.
-async fn run_capture(command: &str,command_text : &str) -> String{
+fn run_capture(command: &str,command_text : &str) -> String{
     let mut cmd = Command::new(command);
     cmd.args(command_text.split(" "));
 
