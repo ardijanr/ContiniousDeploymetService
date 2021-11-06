@@ -10,6 +10,10 @@ const REMOTE_COMMIT  : &str = "ls-remote origin HEAD";
 const GIT_RESET : &str = "reset --hard origin/";
 const COMPOSE : &str = "docker-compose up --build --headless";
 
+
+//TODO test
+
+
 fn main() {
 
     if new_commit() {
@@ -18,20 +22,23 @@ fn main() {
 
         run_capture("git",rebase_command.as_str());
 
+
+        //TODO check if build was successful first with docker build, before we start docker-compose
+
         let result = run_and_output("sudo", COMPOSE);
 
         if result.is_ok() {
-            exit(0)
+            println!("Successfully deployed new version");
+            exit(0);
         } else {
-            exit(1)
+            println!("Unable to deploy new changes, check logs");
+            //log stdout
+            exit(1);
         }
-
     }
 
-
-
-
-
+    println!("No changes to pull!");
+    exit(1);
 }
 
 

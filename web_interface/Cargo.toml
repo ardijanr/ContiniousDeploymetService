@@ -8,3 +8,4 @@ edition = "2018"
 [dependencies]
 actix-web = "3.3.2"
 execute = "0.2.9"
+actix-ratelimit = "0.3.1"
