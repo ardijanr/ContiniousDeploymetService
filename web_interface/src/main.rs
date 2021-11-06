@@ -13,10 +13,10 @@ use execute::Execute;
 
 
 // Path where the deployed folders are
-const DEPLOYMENT_PATH : &str = "/home/deploy/";
+const DEPLOYMENT_PATH : &str = "/home/deployer/repos/";
 
 // Accompanying program that can run root commands, to build and deploy the project
-const PROGRAM : &str = "deployment_worker";
+const PROGRAM : &str = "deploy_worker";
 
 // Max requests per minute
 const REQ_PR_MIN : usize = 50;
@@ -27,8 +27,8 @@ const ALLOWED_HOSTS : [&str ; 2] = ["localhost:8080","github"];
 
 #[get("/deploy/{project}")]
 async fn index(req: HttpRequest, project: web::Path<String>) -> Result<HttpResponse, Error> {
-
     if let Some(host) = req.headers().get("host"){
+        println!("HOST IS :   {:?}",host);
         if ALLOWED_HOSTS.contains(&host.to_str().unwrap()) {
             let temp = deploy(project.as_str().to_string()).await;
 
@@ -52,7 +52,7 @@ async fn deploy(folder: String) -> String {
             let result = run_service();
             println!("{:?}",result);
             if result.1==0{
-                return "Sucessfull Deployment".to_string();
+                return "Successfully Deployment".to_string();
             }
 
             return result.0;
@@ -99,7 +99,7 @@ async fn main() -> std::io::Result<()> {
             )
             .service(web::resource("/test1.html").to(|| async { "Test\r\n" }))
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", 4999))?
     .workers(1)
     .run()
     .await

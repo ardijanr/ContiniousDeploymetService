@@ -50,6 +50,11 @@ async fn new_commit()->bool{
     let tmp  = run_capture("git",REMOTE_COMMIT).await;
     let remote : Vec<&str> = tmp.split_ascii_whitespace().collect();
 
+    if remote.len() == 0 {
+        println!{"check repository or pull permissions for the user"}
+        exit(1)
+    }
+
     println!("{:?}\n{:?}",local[0],remote[0]    );
 
     if local[0] != remote[0] {
