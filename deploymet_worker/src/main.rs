@@ -8,7 +8,7 @@ const CURRENT_BRANCH : &str = "rev-parse --abbrev-ref HEAD";
 const LOCAL_COMMIT   : &str = "rev-parse HEAD";
 const REMOTE_COMMIT  : &str = "ls-remote origin HEAD";
 const GIT_RESET : &str = "reset --hard origin/";
-const COMPOSE : &str = "docker-compose up --build --headless";
+const COMPOSE : &str = "docker-compose up --build --detach";
 
 
 //TODO test
