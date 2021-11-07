@@ -20,5 +20,5 @@ Remember its the name of the folder that determines the route.
 
 
 Features needed:
- - Check for compose file existence, if not return as if the folder does note exist.
+ - Check for compose file existence, if not return as if the folder does not exist.
  - Check if containers are up report if not.
