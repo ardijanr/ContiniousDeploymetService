@@ -1,6 +1,5 @@
 use std::str::from_utf8;
-use std::{env, process::exit};
-use std::process::{Command, Stdio};
+use std::process::{Command, Stdio, exit};
 use std::io::{BufRead, BufReader};
 
 

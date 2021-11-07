@@ -1,14 +1,10 @@
 use actix_ratelimit::{RateLimiter, MemoryStore, MemoryStoreActor};
+use actix_web::{App, Error, HttpResponse, HttpServer, get, middleware, web};
 
-use actix_web::error::ErrorMethodNotAllowed;
-use actix_web::{App, Error, HttpRequest, HttpResponse, HttpServer, ResponseError, get, middleware, web};
-use std::net::SocketAddrV6;
 use std::str::from_utf8;
-use std::{env, fs,thread, time::Duration};
-
+use std::{env, fs, time::Duration};
 use std::process::Command;
 
-use execute::Execute;
 
 
 
