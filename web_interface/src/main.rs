@@ -48,6 +48,7 @@ async fn deploy(folder: String) -> String {
                 return "Successful Deployment".to_string();
             }
 
+            return "No new changes or breaking changes, check worker logs.".to_string();
         }
     }
     return "Project was not found".to_string();
