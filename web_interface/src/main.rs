@@ -45,10 +45,9 @@ async fn deploy(folder: String) -> String {
             println!("{}",result.0.to_string());
             println!("Exit code: {:?}",result.1);
             if result.1==0{
-                return "Successfully Deployment".to_string();
+                return "Successful Deployment".to_string();
             }
 
-            return result.0;
         }
     }
     return "Project was not found".to_string();
