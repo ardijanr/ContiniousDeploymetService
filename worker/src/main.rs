@@ -42,7 +42,6 @@ fn main() {
 
 //Checks if remote is ahead of local.
 fn new_commit()->bool{
-    println!("{:?}", run_capture("ls","./"));
     let tmp  = run_capture("git",LOCAL_COMMIT);
     let local : Vec<&str> = tmp.split_ascii_whitespace().collect();
 
