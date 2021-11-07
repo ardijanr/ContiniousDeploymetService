@@ -1,0 +1,15 @@
+[Unit]
+Description=Actix web contious deployment service, updates and deploys repos for the deployer user.
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=deployer
+Group=deployer
+ExecStart=/home/deployer/cd_service/web_interface
+
+[Install]
+WantedBy=multi-user.target
