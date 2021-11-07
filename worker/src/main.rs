@@ -10,9 +10,6 @@ const GIT_RESET : &str = "reset --hard origin/";
 const COMPOSE : &str = "docker-compose up --build --detach";
 
 
-//TODO test
-
-
 fn main() {
 
     if new_commit() {
@@ -31,7 +28,6 @@ fn main() {
             exit(0);
         } else {
             println!("Unable to deploy new changes, check logs");
-            //log stdout
             exit(1);
         }
     }

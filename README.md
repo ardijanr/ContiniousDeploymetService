@@ -15,4 +15,4 @@ How To:
  - Add github actions
  - Done
 
-Remember its the name of the folder that dermines the route.
+Remember its the name of the folder that determines the route.
