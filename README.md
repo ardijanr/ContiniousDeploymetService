@@ -9,6 +9,7 @@ Returns an error if build failed.
 How To:
  - Create the user deployer
  - Add ssh keys to deployer, root and github
+ - Add the worker /bin folder, add it to sudoers with nopasswd such that it can rund docker etc.
  - Run the scripts
  - Just clone repos into /home/deployer/repos folder
  - Add github actions
