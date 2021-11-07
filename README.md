@@ -1,4 +1,4 @@
-# Simple Contious Deployment Web Application 
+# Simple Continuous Deployment Web Application 
 
 Written in actix web
 
