@@ -16,7 +16,10 @@ fn main() {
 
         let reset_command = format!("{}{}",GIT_RESET,run_capture("git",CURRENT_BRANCH).trim());
 
+        //pull changes first
         let _ = run_and_output("git","pull --rebase");
+
+        //reset to origin in case there are local changes for some reason
         let _ = run_and_output("git",reset_command.as_str());
 
         //TODO check if build was successful first with docker build, before we start docker-compose
