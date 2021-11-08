@@ -18,5 +18,4 @@ fn main() {
     println!("Nov 08 08:27:02 webserver web_interface[855]:'");
     println!("Nov 08 08:27:02 webserver web_interface[855]: Successfully deployed new version'");
     println!("Nov 08 08:27:02 webserver web_interface[855]: Exit code: 0'");
-
 }

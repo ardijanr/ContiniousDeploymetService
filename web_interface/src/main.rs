@@ -76,7 +76,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(
                 RateLimiter::new(
                 MemoryStoreActor::from(store.clone()).start())
-                    .with_interval(Duration::from_secs(60))
+                    .with_interval(Duration::from_secs(60*10))
                     .with_max_requests(REQ_PR_MIN)
             )
             .service(index)
